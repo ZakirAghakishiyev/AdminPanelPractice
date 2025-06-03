@@ -1,3 +1,4 @@
+using AdminPanelPractice.Areas.Admin.Data;
 using AdminPanelPractice.DataContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,8 @@ namespace AdminPanelPractice
                 options.Password.RequiredLength = 4
             ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             // Add services to the container.
+
+            FilePathConstants.TopicPath = Path.Combine(builder.Environment.WebRootPath, "images", "topic");
 
             var app = builder.Build();
 

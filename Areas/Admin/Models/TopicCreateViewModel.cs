@@ -1,8 +1,9 @@
 ﻿namespace AdminPanelPractice.Areas.Admin.Models
 {
-    public class TopicCreateView
+    public class TopicCreateViewModel
     {
         public required string Title { get; set; }
-        public required string CoverImgUrl { get; set; }
+        public required IFormFile CoverImageFile { get; set; }
+
     }
 }
