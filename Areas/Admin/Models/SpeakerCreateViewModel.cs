@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AdminPanelPractice.DataContext.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AdminPanelPractice.DataContext.Entities
+namespace AdminPanelPractice.Areas.Admin.Models
 {
-    public class Speaker
+    public class SpeakerCreateViewModel
     {
-        public int Id { get; set; }
         public required string Username { get; set; }
         public required string ProfileImgUrl { get; set; }
         [NotMapped]
@@ -16,7 +16,10 @@ namespace AdminPanelPractice.DataContext.Entities
         public string? WhatsAppLink { get; set; }
         public string? YoutubeLink { get; set; }
         public string? Email { get; set; }
-        public List<Topic> Topics { get; set; } = new List<Topic>();
-        public List<Podcast> Podcasts { get; set; } = [];
+        public List<int> TopicIds { get; set; } = [];
+        public List<SelectListItem> Topics { get; set; } = [];
+        public List<int> PodcastIds { get; set; } = [];
+
+        public List<SelectListItem> Podcasts { get; set; } = [];
     }
 }

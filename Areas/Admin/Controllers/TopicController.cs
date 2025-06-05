@@ -79,7 +79,71 @@ namespace AdminPanelPractice.Areas.Admin.Controllers
 
             return Json(removedTopic.Entity);
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var topic = await _dbContext.Topics.FindAsync(id);
+            if (topic == null) return NotFound();
+
+            var viewModel = new TopicUpdateViewModel
+            {
+                Id = topic.Id,
+                Title = topic.Title,
+                CoverImgUrl = topic.CoverImgUrl
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(TopicUpdateViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var topic = await _dbContext.Topics.FirstOrDefaultAsync(x => x.Id == model.Id);
+            if (topic == null) return NotFound();
+
+            topic.Title = model.Title;
+
+            if (model.CoverImageFile != null)
+            {
+                if (!model.CoverImageFile.IsImage())
+                {
+                    ModelState.AddModelError("CoverImageFile", "Sekil secilmelidir!");
+                    return View(model);
+                }
+
+                if (!model.CoverImageFile.IsAllowedSize(1))
+                {
+                    ModelState.AddModelError("CoverImageFile", "Sekil hecmi 1mb-dan cox ola bilmez");
+                    return View(model);
+                }
+
+                var uniqueFileName = await model.CoverImageFile.GenerateFile(FilePathConstants.TopicPath);
+
+                if (!string.IsNullOrWhiteSpace(topic.CoverImgUrl))
+                {
+                    var oldImagePath = Path.Combine(FilePathConstants.TopicPath, topic.CoverImgUrl);
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                topic.CoverImgUrl = uniqueFileName;
+            }
+
+            _dbContext.Topics.Update(topic);
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
+
+
 
     public class RequestModel
     {

@@ -1,0 +1,50 @@
+﻿@model SpeakerCreateViewModel
+
+<div class="card-body">
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Username</label>
+            <input asp-for="Username" class="form-control" id="basic-default-fullname" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <label>Images</label>
+            <div class="input-group col-xs-12">
+                <input asp-for="ProfileImg" class="form-control file-upload-info" placeholder="Upload Image">
+            </div>
+            <span asp-validation-for="ProfileImg" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Link of WhatsApp</label>
+            <input asp-for="WhatsAppLink" class="form-control" id="basic-default-fullname" placeholder="W.me..." />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Link of Instagram</label>
+            <input asp-for="InstagramLink" class="form-control" id="basic-default-fullname" placeholder="www.instagram.com" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Link of YouTube</label>
+            <input asp-for="YoutubeLink" class="form-control" id="basic-default-fullname" placeholder="www.youtube.com" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Link of Facebook</label>
+            <input asp-for="FacebookLink" class="form-control" id="basic-default-fullname" placeholder="www.facebook.com"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Email</label>
+            <input asp-for="Email" class="form-control" id="basic-default-fullname" placeholder="abcd@gmail.com" />
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="IsVerified" class="form-check-input" type="checkbox" id="isVerifiedCheckbox" />
+            <label class="form-check-label" for="isVerifiedCheckbox">Verified</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="topicSelect">Select Topics</label>
+            <select asp-for="TopicIds" asp-items="Model.Topics" multiple class="form-select" id="topicSelect"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        <a asp-action="index" class="btn btn-light">Cancel</a>
+    </form>
+</div>

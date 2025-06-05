@@ -1,35 +1,8 @@
-﻿@using AdminPanelPractice.DataContext.Entities
-@model List<Topic>
+﻿@model List<Speaker>
 
-<a></a>
-
-@* <table>
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th>Title</th>
-			<th>Image</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach(var item in Model){
-			<tr>
-				<td>@item.Id</td>.
-				<td>@item.Title</td>
-				<td><img src="~/images/topic/@item.CoverImgUrl" alt="@item.Title" style="width: 75px"/></td>
-				<td>
-					<a asp-controller="slider" asp-action="update" asp-route-id="@item.Id" class="btn btn-warning" style="width: 75px">Update</a>
-					<a onclick="DeleteFunc(@item.Id,this)" class="btn btn-warning" style="width: 75px; background-color:red">Delete</a>
-				</td>
-
-			</tr>
-		}
-	</tbody>
-</table>
- *@
- <a asp-controller="topic" asp-action="create">
+<a asp-controller="speaker" asp-action="create">
     <button class="btn btn-primary">Create</button>
- </a>
+</a>
 
 <div class="card">
     <h5 class="card-header">Topics</h5>
@@ -38,23 +11,24 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Image</th>
+                    <th>Username</th>
+                    <th>Profile Image</th>
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-                @foreach(var item in Model){
+                @foreach (var item in Model)
+                {
                     <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@item.Id</strong></td>
-                        <td>@item.Title</td>
-                        <td><img src="~/images/topic/@item.CoverImgUrl" alt="@item.Title" style="width: 75px"/></td>
+                        <td>@item.Username</td>
+                        <td><img src="~/images/topic/@item.ProfileImgUrl" alt="@item.Username" style="width: 75px; border-radius: 50%" /></td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a asp-controller="topic" asp-action="update" asp-route-id="@item.Id" class="dropdown-item" ><i class="bx bx-edit-alt me-1"></i> Update</a>
+                                    <a asp-controller="speaker" asp-action="update" asp-route-id="@item.Id" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Update</a>
                                     <a onclick="DeleteFunc(@item.Id,this)" class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
@@ -69,7 +43,7 @@
 
 <script>
     function DeleteFunc(id, button){
-    const url = '/admin/topic/delete';
+    const url = '/admin/speaker/delete';
     const data = {
       id: id,
     };
